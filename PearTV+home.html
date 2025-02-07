@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pear TV+ - Início</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #4CAF50; /* Verde */
+            --background-color-light: #ffffff;
+            --background-color-dark: #121212;
+            --text-color-light: #000000;
+            --text-color-dark: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color-dark);
+            color: var(--text-color-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--accent-color);
+            color: var(--text-color-dark);
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: var(--background-color-dark);
+            color: var(--text-color-dark);
+            padding: 1rem;
+            height: 100vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .sidebar ul li i {
+            margin-right: 1rem;
+        }
+
+        .sidebar ul li:hover {
+            color: var(--accent-color);
+        }
+
+        a {
+            color: var(--text-color-dark);
+            text-decoration: none;
+        }
+
+        button {
+            background-color: var(--text-color-dark);
+            color: var(--background-color-light);
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--background-color-dark);
+            color: var(--text-color-light);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .video-card {
+            background-color: var(--background-color-light);
+            border: 1px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            width: 330px;
+        }
+
+        .video-card:hover {
+            background-color: var(--accent-color);
+            color: var(--text-color-dark);
+        }
+
+        .light-mode {
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+        }
+
+        .light-mode .video-card {
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+            border-color: var(--accent-color);
+        }
+
+        .light-mode header {
+            background-color: var(--accent-color);
+            color: var(--text-color-dark);
+        }
+
+        .light-mode .sidebar {
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+        }
+
+        .light-mode a {
+            color: var(--text-color-light);
+        }
+
+        /* Estilo para o popup modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 60px; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4); 
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li><i class="material-icons">home</i>Início</li>
+            <li><i class="material-icons">tv</i>Séries</li>
+            <li><i class="material-icons">movie</i>Filmes</li>
+            <li><i class="material-icons">library_books</i>Documentários</li>
+            <li><i class="material-icons">live_tv</i>Ao Vivo</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <header>
+            <h1>Pear TV+</h1>
+            <button id="theme-toggle" style="color: var(--accent-color)">Trocar Tema</button>
+        </header>
+        <main>
+            <section class="video-grid">
+                <div class="video-card" id="videocard1">
+                    <img src="movie1.png" alt="Nail: A Busca da Pérola de Anna">
+                    <br />
+                    <h2 style="color: #000">Nail: A Busca da Pérola de Anna</h2>
+                </div>
+                <!-- Adicione mais vídeos conforme necessário -->
+            </section>
+        </main>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <video controls width="100%">
+                <source src="video.mp4" type="video/mp4">
+                Seu navegador não suporta a tag de vídeo.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+        const modal = document.getElementById("myModal");
+        const videoCard1 = document.getElementById("videocard1");
+        const span = document.getElementsByClassName("close")[0];
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+        });
+
+        videoCard1.addEventListener('click', () => {
+            modal.style.display = "block";
+        });
+
+        span.onclick = () => {
+            modal.style.display = "none";
+        }
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
